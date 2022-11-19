@@ -1,11 +1,11 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { Sale } from "../../models/sales";
-import { BASE_URL } from "../../utils/request";
 import NotificationButton from '../NotificationButton';
 import './styles.css';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { BASE_URL } from '../../utils/request';
+import { Sale } from '../../models/sales';
 
 function SalesCard() {
 
@@ -15,20 +15,18 @@ function SalesCard() {
     const [minDate, setMinDate] = useState(min);
     const [maxDate, setMaxDate] = useState(max);
 
-    const [sales, setSales] = useState<Sale[]>([])
+    const [sales, setSales] = useState<Sale[]>([]);
 
     useEffect(() => {
 
-        const dmin = minDate.toISOString().slice(0, 10);
-        const dmax = maxDate.toISOString().slice(0, 10)
+        const dmin = minDate.toISOString().slice(0,10);
+        const dmax = maxDate.toISOString().slice(0,10);
 
-        
         axios.get(`${BASE_URL}/sales?minDate=${dmin}&maxDate=${dmax}`)
             .then(response => {
-                setSales(response.data.content)
-            })
+                setSales(response.data.content);
+            });
     }, [minDate, maxDate]);
-
 
     return (
         <div className="dsmeta-card">
@@ -77,20 +75,18 @@ function SalesCard() {
                                     <td>R$ {sale.amount.toFixed(2)}</td>
                                     <td>
                                         <div className="dsmeta-red-btn-container">
-                                            <NotificationButton saleId={sale.id} />
-
+                                            <NotificationButton saleId={sale.id}/>
                                         </div>
                                     </td>
                                 </tr>
                             )
                         })}
-
                     </tbody>
 
                 </table>
             </div>
 
-        </div >
+        </div>
     )
 }
 
